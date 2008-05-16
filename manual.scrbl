@@ -66,7 +66,7 @@ Returns true if the datum is a @scheme[tqueue].
 }
 
 
-@defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c]) any]{
+@defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c] [deps (listof any/c)]) any]{
 Adds an elements and its list of dependencies to a @scheme[tqueue].
 }
 

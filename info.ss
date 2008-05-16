@@ -5,6 +5,7 @@
 (define version "1.0")
 (define primary-file "tqueue.ss")
 (define scribblings '(("manual.scrbl" ())))
+(define doc.txt "doc.txt")
 (define homepage "http://hashcollision.org/")
 (define can-be-loaded-with 'all)
 (define required-core-version "399")
