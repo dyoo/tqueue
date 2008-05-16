@@ -103,7 +103,6 @@ dependencies are compared by @scheme[eq?], not @scheme[equal?].
 
 
 
-
 @bibliography{
   @bib-entry[#:key "TAOCP" 
              #:title "The Art of Computer Programming.  Volume 1: Fundamental Algorithms" 

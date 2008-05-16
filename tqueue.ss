@@ -68,7 +68,8 @@
   (let ([sema (make-semaphore)])
     (channel-put (tqueue-worker-channel a-tqueue)
                  (make-cmd:add! an-elt deps sema))
-    (sync sema)))
+    (sync sema)
+    (void)))
 
 
 ;; tqueue-satisfy!: tqueue dep -> void
@@ -80,7 +81,8 @@
   (let ([sema (make-semaphore)])
     (channel-put (tqueue-worker-channel a-tqueue)
                  (make-cmd:satisfy! a-dep sema))
-    (sync sema)))
+    (sync sema)
+    (void)))
 
 
 ;; tqueue-get: tqueue -> elt
