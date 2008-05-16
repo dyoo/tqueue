@@ -12,20 +12,21 @@ topologicial sorting.}
 @scheme[tqueue] provides a data structure for maintaining elements
 with dependencies.  It keeps track of known satisfied dependencies;
 any elements whose dependencies are all satisifed can pop off a
-tqueue.  This is basically an implementation of Algorithm T from
+@scheme[tqueue].  This is basically an implementation of Algorithm T from
 Section 2.2.3 of The Art of Computer Programming @cite["TAOCP"].
 
 
 @section{Example}
 
 As a simple application, we can topologically sort a sequence of
-elements by feeding a tqueue all the dependency information.  We can
-then alternate the following steps until we exhaust the queue:
-@itemize{
-  @item{Pop off a ready element}
-  @item{Tell the queue that we've satisfied the element}
-}
+elements by feeding a @scheme[tqueue] all the dependency information.
+We can then alternate the following steps until we exhaust the
+@scheme[tqueue]:
 
+@itemize{
+  @item{Pop off a ready element.}
+  @item{Tell the queue that we've satisfied the element.}
+}
 
 @examples[
 (require (planet dyoo/tqueue:1/tqueue))
@@ -57,21 +58,21 @@ then alternate the following steps until we exhaust the queue:
 
 
 @defproc[(new-tqueue) tqueue?]{
-Creates a new tqueue.
+Creates a new @scheme[tqueue].
 }
 
 
 @defproc[(tqueue? [datum any/c]) boolean?]{
-Returns true if the datum is a tqueue.
+Returns true if the datum is a @scheme[tqueue].
 }
 
 
 @defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c]) any]{
-Adds an elements and its list of dependencies to a tqueue.
+Adds an elements and its list of dependencies to a @scheme[tqueue].
 }
 
 @defproc[(tqueue-satisfy! [a-tqueue tqueue?] [dep any/c]) any]{
-Notifies the queue that a dependency has been satisfied.
+Notifies the @scheme[tqueue] that a dependency has been satisfied.
 }
 
 @defproc[(tqueue-get [a-tqueue tqueue?]) any/c]{
@@ -94,7 +95,7 @@ ready elements that have all their dependencies satisfied.
 @section{Notes}
 
 A @scheme[tqueue] will remember all dependencies that are passed by
-@scheme[tqueue-satisfy], so be careful if the @scheme[tqueue] is
+@scheme[tqueue-satisfy!], so be careful if the @scheme[tqueue] is
 long-lived.
 
 Elements and dependencies are allowed to be of any type.  Equality of
