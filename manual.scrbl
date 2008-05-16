@@ -47,11 +47,11 @@ Returns true if the datum is a tqueue.
 }
 
 
-@defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c]) any){
+@defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c]) any]{
 Adds an elements and its list of dependencies to a tqueue.
 }
 
-@defproc[(tqueue-satisfy! [a-tqueue tqueue?] [dep any/c]) any){
+@defproc[(tqueue-satisfy! [a-tqueue tqueue?] [dep any/c]) any]{
 Notifies the queue that a dependency has been satisfied.
 }
 
