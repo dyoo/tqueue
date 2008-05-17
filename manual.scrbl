@@ -4,7 +4,7 @@
           (for-label "tqueue.ss"))
 
 
-@title{tqueue: a queue-like data structure for topologicial sorting.}
+@title{tqueue: a queue-like data structure for topological sorting.}
 
 @defmodule[(planet dyoo/tqueue:1/tqueue)]
 
