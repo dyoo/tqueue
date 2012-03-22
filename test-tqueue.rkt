@@ -1,14 +1,12 @@
-#lang scheme/base
+#lang racket/base
 
 
-(require "tqueue.ss"
-         (planet "test.ss" ("schematics" "schemeunit.plt" 2 8))
-         (planet "text-ui.ss" ("schematics" "schemeunit.plt" 2 8)))
+(require "tqueue.rkt"
+         rackunit
+         rackunit/text-ui)
 
 (provide test-topological-queue)
 
-(define (test)
-  (test/text-ui test-topological-queue))
 
 (define test-topological-queue
   (test-suite
@@ -52,3 +50,8 @@
       (tqueue-satisfy! tqueue 'c)
       (tqueue-add! tqueue 'b '(a c))
       (check-eq? (tqueue-get tqueue) 'b)))))
+
+(define (test)
+  (run-tests test-topological-queue))
+
+(test)

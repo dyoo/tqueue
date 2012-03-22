@@ -1,13 +1,13 @@
-#lang scheme/base
+#lang racket/base
 ;; Provides a queue for elements that have dependencies.  An element can be pushed
 ;; onto the queue along with its dependencies.  We can also tell the queue
 ;; when some dependency has been satisfied. Finally, we can get elements from the
 ;; queue whose dependencies are all satisfied.
 ;;
-(require scheme/contract
-         scheme/match
-         scheme/async-channel
-         scheme/list)
+(require racket/contract
+         racket/match
+         racket/async-channel
+         racket/list)
 
 
 
