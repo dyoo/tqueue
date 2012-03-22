@@ -8,19 +8,19 @@
 
 @defmodule/this-package[main]
 
-@scheme[tqueue] provides a data structure for maintaining elements
+@racket[tqueue] provides a data structure for maintaining elements
 with dependencies.  It keeps track of known satisfied dependencies;
 any elements whose dependencies are all satisifed can pop off a
-@scheme[tqueue].  This is basically an implementation of Algorithm T from
+@racket[tqueue].  This is basically an implementation of Algorithm T from
 Section 2.2.3 of The Art of Computer Programming @cite["TAOCP"].
 
 
 @section{Example}
 
 As a simple application, we can topologically sort a sequence of
-elements by feeding a @scheme[tqueue] all the dependency information.
+elements by feeding a @racket[tqueue] all the dependency information.
 We can then alternate the following steps until we exhaust the
-@scheme[tqueue]:
+@racket[tqueue]:
 
 @itemize{
   @item{Pop off a ready element.}
@@ -57,25 +57,25 @@ We can then alternate the following steps until we exhaust the
 
 
 @defproc[(new-tqueue) tqueue?]{
-Creates a new @scheme[tqueue].
+Creates a new @racket[tqueue].
 }
 
 
 @defproc[(tqueue? [datum any/c]) boolean?]{
-Returns true if the datum is a @scheme[tqueue].
+Returns true if the datum is a @racket[tqueue].
 }
 
 
 @defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c] [deps (listof any/c)]) any]{
-Adds an elements and its list of dependencies to a @scheme[tqueue].
+Adds an elements and its list of dependencies to a @racket[tqueue].
 
 Elements and dependencies are allowed to be of any type.  Equality of
-dependencies are compared by @scheme[eq?], not @scheme[equal?].
+dependencies are compared by @racket[eq?], not @racket[equal?].
 }
 
 
 @defproc[(tqueue-satisfy! [a-tqueue tqueue?] [dep any/c]) any]{
-Notifies the @scheme[tqueue] that a dependency has been satisfied.
+Notifies the @racket[tqueue] that a dependency has been satisfied.
 
 Note: the effect of this applies prospectively to any elements
 added in the future with @racket[tqueue-add!].  For example:
@@ -91,17 +91,17 @@ added in the future with @racket[tqueue-add!].  For example:
 
 
 @defproc[(tqueue-get [a-tqueue tqueue?]) any/c]{
-Returns the next element from a @scheme[tqueue].  Blocks if no element
+Returns the next element from a @racket[tqueue].  Blocks if no element
 is available.
 }
 
 @defproc[(tqueue-try-get [a-tqueue tqueue?]) (or/c any/c false/c)]{
-Returns the next element from a @scheme[tqueue], or @scheme[#f] if no
+Returns the next element from a @racket[tqueue], or @racket[#f] if no
 element is available.
 }
 
 @defproc[(tqueue-ready-channel [a-tqueue tqueue?]) async-channel?]{
-Provides low-level access to the @scheme[async-channel] that fills with
+Provides low-level access to the @racket[async-channel] that fills with
 ready elements that have all their dependencies satisfied.
 }
 
@@ -124,8 +124,8 @@ shows that the use of @racket[tqueue-satisfy!] here does not satisfy
 the dependency of @racket["a"], since it depends on a different @racket["b"].
 
 
-Also, a @scheme[tqueue] will remember all dependencies that are passed by
-@scheme[tqueue-satisfy!], so be careful if the @scheme[tqueue] is
+Also, a @racket[tqueue] will remember all dependencies that are passed by
+@racket[tqueue-satisfy!], so be careful if the @racket[tqueue] is
 long-lived, as it will continue to hold references in memory.
 
 
