@@ -77,9 +77,8 @@ dependencies are compared by @scheme[eq?], not @scheme[equal?].
 @defproc[(tqueue-satisfy! [a-tqueue tqueue?] [dep any/c]) any]{
 Notifies the @scheme[tqueue] that a dependency has been satisfied.
 
-Note: the effect of this also apply prospectively to any elements
+Note: the effect of this applies prospectively to any elements
 added in the future with @racket[tqueue-add!].  For example:
-
 @interaction[
 (require (planet dyoo/tqueue))
 (let ([a-queue (new-tqueue)])
@@ -109,9 +108,25 @@ ready elements that have all their dependencies satisfied.
 
 @section{Notes}
 
-A @scheme[tqueue] will remember all dependencies that are passed by
+Be careful that the dependencies fed with @racket[tqueue-add!] and
+satisfied with @racket[tqueue-satisfy!] are @racket[eq?].
+
+For example,
+the following interaction:
+@interaction[
+(require (planet dyoo/tqueue))
+(let ([tqueue (new-tqueue)])
+  (tqueue-add! tqueue "a" (list "b"))
+  (tqueue-satisfy! tqueue (string-copy "b"))
+  (tqueue-try-get tqueue))
+]
+shows that the use of @racket[tqueue-satisfy!] here does not satisfy
+the dependency of @racket["a"], since it depends on a different @racket["b"].
+
+
+Also, a @scheme[tqueue] will remember all dependencies that are passed by
 @scheme[tqueue-satisfy!], so be careful if the @scheme[tqueue] is
-long-lived.
+long-lived, as it will continue to hold references in memory.
 
 
 
