@@ -1,8 +1,9 @@
 #lang racket/base
-;; Provides a queue for elements that have dependencies.  An element can be pushed
-;; onto the queue along with its dependencies.  We can also tell the queue
-;; when some dependency has been satisfied. Finally, we can get elements from the
-;; queue whose dependencies are all satisfied.
+;; Provides a queue for elements that have dependencies.  An element
+;; can be pushed onto the queue along with its dependencies.  We can
+;; also tell the queue when some dependency has been
+;; satisfied. Finally, we can get elements from the queue whose
+;; dependencies are all satisfied.
 ;;
 (require racket/contract
          racket/match
@@ -42,8 +43,8 @@
 ;; to handle serialized access to the thread.
 (define (new-tqueue)
   (let ([a-tqueue
-         (make-tqueue (make-hash) ;; satisifed-deps will be the keys
-                      (make-hash) ;; dep-to-targets will map a dep to a list of targets
+         (make-tqueue (make-hasheq) ;; satisifed-deps will be the keys
+                      (make-hasheq) ;; dep-to-targets will map a dep to a list of targets
                       (make-async-channel) ; ready will contain any ready elements.
                       (make-channel) ;; worker channel
                       #f ;; Worker thread will be assigned.

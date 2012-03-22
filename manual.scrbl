@@ -1,12 +1,12 @@
-#lang scribble/doc
-@(require scribble/manual
-          scribble/eval
-          (for-label "tqueue.ss"))
+#lang scribble/manual
+@(require scribble/eval
+          planet/scribble
+          (for-label (this-package-in main)))
 
 
 @title{tqueue: a queue-like data structure for topological sorting.}
 
-@defmodule[(planet dyoo/tqueue:1/tqueue)]
+@defmodule/this-package[main]
 
 @scheme[tqueue] provides a data structure for maintaining elements
 with dependencies.  It keeps track of known satisfied dependencies;
@@ -28,7 +28,7 @@ We can then alternate the following steps until we exhaust the
 }
 
 @examples[
-(require (planet dyoo/tqueue:1/tqueue))
+(require (planet dyoo/tqueue))
 
 (define a-tqueue (new-tqueue))
 
@@ -68,11 +68,28 @@ Returns true if the datum is a @scheme[tqueue].
 
 @defproc[(tqueue-add! [a-tqueue tqueue?] [elt any/c] [deps (listof any/c)]) any]{
 Adds an elements and its list of dependencies to a @scheme[tqueue].
+
+Elements and dependencies are allowed to be of any type.  Equality of
+dependencies are compared by @scheme[eq?], not @scheme[equal?].
 }
+
 
 @defproc[(tqueue-satisfy! [a-tqueue tqueue?] [dep any/c]) any]{
 Notifies the @scheme[tqueue] that a dependency has been satisfied.
+
+Note: the effect of this also apply prospectively to any elements
+added in the future with @racket[tqueue-add!].  For example:
+
+@interaction[
+(require (planet dyoo/tqueue))
+(let ([a-queue (new-tqueue)])
+  (tqueue-satisfy! a-queue 'milk)
+  (tqueue-satisfy! a-queue 'cookies)
+  (tqueue-add! a-queue 'mouse '(cookies milk))
+  (tqueue-try-get a-queue))
+]
 }
+
 
 @defproc[(tqueue-get [a-tqueue tqueue?]) any/c]{
 Returns the next element from a @scheme[tqueue].  Blocks if no element
@@ -90,16 +107,11 @@ ready elements that have all their dependencies satisfied.
 }
 
 
-
 @section{Notes}
 
 A @scheme[tqueue] will remember all dependencies that are passed by
 @scheme[tqueue-satisfy!], so be careful if the @scheme[tqueue] is
 long-lived.
-
-Elements and dependencies are allowed to be of any type.  Equality of
-dependencies are compared by @scheme[eq?], not @scheme[equal?].
-
 
 
 

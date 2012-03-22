@@ -25,6 +25,31 @@
       (check-eq? (tqueue-try-get tqueue) 'b)
       (tqueue-satisfy! tqueue 'b)
       (check-eq? (tqueue-try-get tqueue) 'c)))
+
+   (test-case
+    "ensure it's depending on eq rather than equal"
+    (let ([tqueue (new-tqueue)])
+      (tqueue-add! tqueue "a" (list "b"))
+      (tqueue-satisfy! tqueue (string-copy "b"))
+      (check-eq? (tqueue-try-get tqueue) #f)))
+
+   (test-case
+    "ensure it's depending on eq rather than equal"
+    (let ([tqueue (new-tqueue)]
+          [a (string-copy "a")]
+          [b (string-copy "b")])
+      (tqueue-add! tqueue a (list b))
+      (tqueue-satisfy! tqueue b)
+      (check-eq? (tqueue-try-get tqueue) a)))
+
+   (test-case
+    "ensure it's depending on eq rather than equal"
+    (let ([tqueue (new-tqueue)]
+          [a (string-copy "a")]
+          [b (string-copy "b")])
+      (tqueue-add! tqueue a (list b))
+      (tqueue-satisfy! tqueue (string-copy b))
+      (check-eq? (tqueue-try-get tqueue) #f)))
    
    
    (test-case
